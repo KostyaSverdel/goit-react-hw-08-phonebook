@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { React, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/api';
 
 const RegisterForm = () => {
-  const [credentials, setCredentials] = useState({
+  const [user, setUser] = useState({
     name: '',
     email: '',
     password: '',
@@ -12,20 +12,31 @@ const RegisterForm = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setCredentials(prev => ({ ...prev, [name]: value }));
+  const handleChangeName = e => {
+    const { value } = e.target;
+    setUser(prev => ({ ...prev, name: value }));
   };
 
-  const handleSubmit = async e => {
+  const handleChangeEmail = e => {
+    const { value } = e.target;
+    setUser(prev => ({ ...prev, email: value }));
+  };
+
+  const handleChangePassword = e => {
+    const { value } = e.target;
+    setUser(prev => ({ ...prev, password: value }));
+  };
+
+  const handleSubmit = e => {
     e.preventDefault();
-    try {
-      await dispatch(registerUser(credentials));
-      setCredentials({ name: '', email: '', password: '' });
-      setError(null);
-    } catch (error) {
-      setError(error.message);
-    }
+    dispatch(registerUser(user))
+      .then(() => {
+        setUser({ name: '', email: '', password: '' });
+        setError(null);
+      })
+      .catch(error => {
+        setError(error.message);
+      });
   };
 
   return (
@@ -37,8 +48,8 @@ const RegisterForm = () => {
         <input
           type="text"
           name="name"
-          value={credentials.name}
-          onChange={handleChange}
+          value={user.name}
+          onChange={handleChangeName}
         />
       </label>
       <label>
@@ -46,8 +57,8 @@ const RegisterForm = () => {
         <input
           type="email"
           name="email"
-          value={credentials.email}
-          onChange={handleChange}
+          value={user.email}
+          onChange={handleChangeEmail}
         />
       </label>
       <label>
@@ -55,8 +66,8 @@ const RegisterForm = () => {
         <input
           type="password"
           name="password"
-          value={credentials.password}
-          onChange={handleChange}
+          value={user.password}
+          onChange={handleChangePassword}
         />
       </label>
       <button type="submit">Register</button>
@@ -65,3 +76,4 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+//Twotest@test.com twotest11111

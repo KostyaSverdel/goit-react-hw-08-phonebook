@@ -1,4 +1,4 @@
-import React from 'react';
+import { React } from 'react';
 import { NavLink } from 'react-router-dom';
 
 function Navigation() {
@@ -6,12 +6,13 @@ function Navigation() {
     <div>
       <ul>
         <li>
+          <NavLink to="/">Home</NavLink>
+        </li>
+        <li>
           <NavLink to="/register">Sign Up</NavLink>
         </li>
         <li>
-          <NavLink to="/login" activeClassName="active">
-            Log In
-          </NavLink>
+          <NavLink to="/login">Log In</NavLink>
         </li>
       </ul>
     </div>

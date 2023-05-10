@@ -2,47 +2,53 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../redux/api';
 
-function LoginForm() {
+const LoginForm = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+  });
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    try {
-      const credentials = { email, password };
-      const { token } = await loginUser(credentials);
-      localStorage.setItem('token', token);
-      dispatch({ type: 'login' });
-    } catch (error) {
-      console.error(error.message);
-    }
+  const handleEmailChange = event => {
+    setUser(prevUser => ({
+      ...prevUser,
+      email: event.target.value,
+    }));
   };
 
+  const handlePasswordChange = event => {
+    setUser(prevUser => ({
+      ...prevUser,
+      password: event.target.value,
+    }));
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    dispatch(loginUser(user));
+  };
+  console.log('LoginForm :>>', LoginForm);
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Email:
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-      </label>
+      <label htmlFor="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value={user.email}
+        onChange={handleEmailChange}
+      />
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value={user.password}
+        onChange={handlePasswordChange}
+      />
       <button type="submit">Log in</button>
     </form>
   );
-}
+};
 
 export default LoginForm;
