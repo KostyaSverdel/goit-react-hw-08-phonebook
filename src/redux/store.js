@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import contactsSlice from './contactsSlice';
+import { authSlice } from './authSlice';
 
 const persistConfig = {
   key: 'root',
@@ -11,7 +12,9 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  auth: authSlice.reducer,
   contacts: contactsSlice.reducer,
+  isLoggedIn: false,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

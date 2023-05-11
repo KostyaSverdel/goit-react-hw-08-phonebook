@@ -5,6 +5,7 @@ axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
 };
 
 const clearAuthHeader = () => {
@@ -111,3 +112,4 @@ export const updateContact = createAsyncThunk(
     }
   }
 );
+
