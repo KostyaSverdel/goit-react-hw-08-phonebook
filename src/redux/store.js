@@ -1,9 +1,7 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import contactsSlice from './contactsSlice';
-import { authSlice } from './authSlice';
+import contactSlice from './contactsSlice';
 
 const persistConfig = {
   key: 'root',
@@ -11,18 +9,13 @@ const persistConfig = {
   whitelist: ['contacts'],
 };
 
-const rootReducer = combineReducers({
-  auth: authSlice.reducer,
-  contacts: contactsSlice.reducer,
-  isLoggedIn: false,
+const persistedReducer = persistReducer(persistConfig, contactSlice.reducer);
+
+const store = configureStore({
+  reducer: {
+    contacts: persistedReducer,
+  },
 });
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-const store = createStore(
-  persistedReducer,
-  applyMiddleware(thunk)
-);
 
 const persistor = persistStore(store);
 

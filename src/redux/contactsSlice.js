@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact, updateContact } from './api';
+import { fetchContacts, addContact, deleteContact } from './api';
 
 const initialState = {
-  items: [],
-  isLoading: false,
-  error: null,
-  filter: ''
+  contacts: {
+    items: [],
+    isLoading: false,
+    error: null
+  },
+  filter: ""
 };
 
 export const fetchContactsAsync = createAsyncThunk(
@@ -24,20 +26,11 @@ export const addContactAsync = createAsyncThunk(
   }
 );
 
-
 export const deleteContactAsync = createAsyncThunk(
   'contacts/deleteContact',
   async contactId => {
     await deleteContact(contactId);
     return contactId;
-  }
-);
-
-export const updateContactAsync = createAsyncThunk(
-  'contacts/updateContact',
-  async ({ contactId, contact }) => {
-    const updatedContact = await updateContact(contactId, contact);
-    return updatedContact;
   }
 );
 
@@ -55,7 +48,7 @@ const contactsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchContactsAsync.fulfilled, (state, action) => {
-        state.items = action.payload;
+        state.contacts = action.payload;
         state.isLoading = false;
       })
       .addCase(fetchContactsAsync.rejected, (state, action) => {
@@ -63,19 +56,12 @@ const contactsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(addContactAsync.fulfilled, (state, action) => {
-        state.items.push(action.payload);
+        state.contacts.push(action.payload);
       })
       .addCase(deleteContactAsync.fulfilled, (state, action) => {
-        state.items = state.items.filter(
+        state.contacts = state.contacts.filter(
           contact => contact.id !== action.payload
         );
-      })
-      .addCase(updateContactAsync.fulfilled, (state, action) => {
-        const { id, ...rest } = action.payload;
-        const index = state.items.findIndex(contact => contact.id === id);
-        if (index !== -1) {
-          state.items[index] = { id, ...rest };
-        }
       });
   },
 });
