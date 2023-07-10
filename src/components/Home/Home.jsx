@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchContactsAsync } from '../../redux/contactsSlice';
+import { fetchContactsAsync } from 'redux/contacts/contactsOperation';
 import ContactListItem from '../ContactListItem/ContactListItem';
 import css from './ContactList.module.css';
 
-function ContactList() {
+function Home() {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.contacts.filter);
@@ -31,4 +31,4 @@ function ContactList() {
   );
 }
 
-export default ContactList;
+export default Home;

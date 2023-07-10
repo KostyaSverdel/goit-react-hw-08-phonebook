@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContactAsync } from '../../redux/contactsSlice';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/contacts/contactsOperation';
 import css from '../ContactForm/ContactForm.module.css';
 
 function ContactForm() {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-
-  const contacts = useSelector(state => state.contacts.contacts);
 
   const handleNameChange = e => {
     setName(e.target.value);
@@ -21,53 +19,44 @@ function ContactForm() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const isNameExist = contacts.find(contact => contact.name === name);
-    const isNumberExist = contacts.find(contact => contact.phone === phone);
-
     if (!name || !phone) {
       alert('Please provide both name and number');
       return;
     }
-    if (isNameExist) {
-      alert(`${name} is already in contacts!`);
-      return;
-    }
-    if (isNumberExist) {
-      alert(`${phone} is already in contacts!`);
-      return;
-    }
     try {
-      await dispatch(addContactAsync({ name, phone }));
+      await dispatch(addContact({ name, phone }));
       setName('');
       setPhone('');
+      alert('Contact is added!');
     } catch (error) {
-      console.error(error);
+      alert('Failed to add contact');
     }
   };
 
   return (
-    <form className={css.phoneForm} onSubmit={handleSubmit}>
-      <label className={css.labelsPhone}>
+    <form className={css.form} onSubmit={handleSubmit}>
+      <label className={css.label}>
         Name
         <input
-          className={css.inputsForm}
+          className={css.input}
           type="text"
           name="name"
           value={name}
           onChange={handleNameChange}
         />
       </label>
-      <label className={css.labelsPhone}>
-        Phone Number
+      <label className={css.label}>
+        Phone
         <input
-          className={css.inputsForm}
-          type="tel"
-          name="number"
+          className={css.input}
+          type="text"
+          name="phone"
           value={phone}
           onChange={handleNumberChange}
         />
       </label>
-      <button className={css.buttonForm} type="submit">
+
+      <button type="submit" className={css.button}>
         Add contact
       </button>
     </form>
