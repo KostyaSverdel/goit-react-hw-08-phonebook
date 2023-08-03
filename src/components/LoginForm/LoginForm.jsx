@@ -24,9 +24,9 @@ const LoginForm = () => {
     setUser(prev => ({ ...prev, password: value }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    dispatch(loginUser(user))
+    await dispatch(loginUser(user))
       .then(() => {
         navigate('/contacts');
         setError(null);

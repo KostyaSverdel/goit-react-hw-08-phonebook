@@ -27,9 +27,9 @@ const RegisterForm = () => {
     setUser(prev => ({ ...prev, password: value }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    dispatch(registerUser(user))
+    await dispatch(registerUser(user))
       .then(() => {
         setUser({ name: '', email: '', password: '' });
         setError(null);

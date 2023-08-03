@@ -1,18 +1,37 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import LoginForm from './LoginForm/LoginForm';
 import RegisterForm from './RegisterForm/RegisterForm';
 import Layout from './Layout/Layout';
 import { PrivateRoute } from './Routes/PrivateRoute';
 import ContactsPage from './ContactsPage/ContactsPage';
+import { RestrictedRoute } from './Routes/RestrictedRoute';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { refreshUser } from 'redux/api';
 
 function App() {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                component={<RegisterForm />}
+                redirectTo="/contacts"
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                component={<LoginForm />}
+                redirectTo="/contacts"
+              />
+            }
+          />
           <Route
             path="/contacts"
             element={

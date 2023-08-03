@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchContactsAsync } from 'redux/contacts/contactsOperation';
-import ContactListItem from '../ContactListItem/ContactListItem';
-import css from './ContactList.module.css';
+import ContactListItem from '../Contacts/ContactListItem/ContactListItem';
+//import css from '../Contacts/ContactListItem/ContactList.module.css';//
 
 function Home() {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function Home() {
   });
 
   return (
-    <ul className={css.ContactListConteiner}>
+    <ul>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -30,5 +30,4 @@ function Home() {
     </ul>
   );
 }
-
 export default Home;
