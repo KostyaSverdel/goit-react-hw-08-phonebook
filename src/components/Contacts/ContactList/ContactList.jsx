@@ -7,7 +7,7 @@ import {
 } from 'redux/contacts/contactsSelectors';
 import { fetchContactsAsync } from 'redux/contacts/contactsOperation';
 
-function ContactList() {
+export const ContactList = () => {
   const error = useSelector(selectError);
   const filterContacts = useSelector(selectFilterContacts);
   const isLoading = useSelector(selectIsLoading);
@@ -54,6 +54,4 @@ function ContactList() {
       )}
     </>
   );
-}
-
-export default ContactList;
+};

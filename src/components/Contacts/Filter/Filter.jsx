@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setFilter } from 'redux/contacts/sliceFilter';
 import css from './Filter.module.css';
 
-function Filter() {
+export const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter);
 
@@ -24,6 +24,4 @@ function Filter() {
       </label>
     </div>
   );
-}
-
-export default Filter;
+};

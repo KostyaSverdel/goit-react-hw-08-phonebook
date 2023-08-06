@@ -5,9 +5,6 @@ import Layout from './Layout/Layout';
 import { PrivateRoute } from './Routes/PrivateRoute';
 import ContactsPage from './ContactsPage/ContactsPage';
 import { RestrictedRoute } from './Routes/RestrictedRoute';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { refreshUser } from 'redux/api';
 
 function App() {
   return (

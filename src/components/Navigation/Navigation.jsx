@@ -1,18 +1,23 @@
 import { React } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from 'redux/authentication/useAuth';
 
 function Navigation() {
+  const { isLogin } = useAuth();
+
   return (
-    <div>
-      <ul>
-        <li>
-          <NavLink to="/register">Sign Up</NavLink>
-        </li>
-        <li>
-          <NavLink to="/login">Log In</NavLink>
-        </li>
-      </ul>
-    </div>
+    !isLogin && (
+      <div>
+        <ul>
+          <li>
+            <NavLink to="/register">Sign Up</NavLink>
+          </li>
+          <li>
+            <NavLink to="/login">Log In</NavLink>
+          </li>
+        </ul>
+      </div>
+    )
   );
 }
 
